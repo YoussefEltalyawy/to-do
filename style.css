@@ -1,0 +1,6 @@
+.class-container {
+  display: flex;
+}
+p {
+  margin: 5px;
+}
