@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #ca3434;
+  --secondary-color: #373434;
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -15,19 +19,35 @@ html {
 .add-task-btn {
   margin-bottom: 10px;
 }
+input {
+  background-color: rgb(240, 240, 240);
+  font-size: 1.5rem;
+  padding: 5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 550;
+  border: none;
+}
 
-.main-tasks-container {
-  background-color: pink;
+input:focus {
+  outline: none;
 }
 
 .task-container {
   display: flex;
   align-items: center;
+  font-size: 1.5rem;
+}
+.task-container:hover {
+  background-color: rgb(240, 240, 240);
+}
+.check-circle {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 header {
   height: 120px;
   width: 100%;
-  background-color: rgb(202, 52, 52);
+  background-color: var(--primary-color);
   color: white;
   display: flex;
   align-items: center;
@@ -35,7 +55,7 @@ header {
 }
 nav {
   width: 10%;
-  background-color: rgb(55, 54, 52);
+  background-color: var(--secondary-color);
   color: white;
   position: fixed;
   top: 120px;
@@ -54,4 +74,9 @@ main {
 p {
   margin: 5px;
   display: inline-block;
+}
+
+.title.checked {
+  color: #808080;
+  text-decoration: line-through;
 }
