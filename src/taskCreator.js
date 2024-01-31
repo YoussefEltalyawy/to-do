@@ -4,13 +4,13 @@ import createTaskUi from "./ui.js";
 
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
-  const taskContainer = document.querySelector(".task-container");
+  const mainTasksContainer = document.querySelector(".main-tasks-container");
   const {titleInput , doneBtn} = createInputAndButton();
 
   
   function handleAddTask() {
-    taskContainer.appendChild(titleInput);
-    taskContainer.appendChild(doneBtn);
+    mainTasksContainer.appendChild(titleInput);
+    mainTasksContainer.appendChild(doneBtn);
   }
 
   function handleDoneBtn() {
