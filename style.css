@@ -1,6 +1,19 @@
 .class-container {
   display: flex;
 }
+.add-task-btn {
+  margin-bottom: 10px;
+}
+
+.main-tasks-container {
+  background-color: pink;
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+}
 p {
   margin: 5px;
+  display: inline-block;
 }
