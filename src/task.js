@@ -1,5 +1,6 @@
 export default class task {
-  constructor(title) {
+  constructor(title, checked, test) {
     this.title = title;
+    this.checked = checked;
   }
 }

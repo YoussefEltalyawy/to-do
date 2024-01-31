@@ -1,6 +1,7 @@
 import "boxicons";
 export function createInputAndButton() {
   const titleInput = document.createElement("input");
+  titleInput.style.border = 'none';
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
 
@@ -13,9 +14,12 @@ export default function createTaskUi(task) {
   taskContainer.className = "task-container";
   const checkcircle = document.createElement("box-icon");
   checkcircle.setAttribute("name", "circle");
+  checkcircle.className = "check-circle";
   const titleText = document.createElement("p");
+  titleText.className = "title";
   titleText.textContent = task.title;
   taskContainer.appendChild(checkcircle);
   taskContainer.appendChild(titleText);
   mainTasksContainer.appendChild(taskContainer);
+  return {checkcircle , titleText};
 }
