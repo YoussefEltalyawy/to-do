@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+  font-weight: 550;
+}
+
 .class-container {
   display: flex;
 }
@@ -12,6 +23,33 @@
 .task-container {
   display: flex;
   align-items: center;
+}
+header {
+  height: 120px;
+  width: 100%;
+  background-color: rgb(202, 52, 52);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+nav {
+  width: 10%;
+  background-color: rgb(55, 54, 52);
+  color: white;
+  position: fixed;
+  top: 120px;
+  bottom: 0;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+main {
+  width: 90%;
+  height: 100%;
+  margin-left: auto;
+  padding: 20px;
 }
 p {
   margin: 5px;
