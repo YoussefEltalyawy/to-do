@@ -1,7 +1,9 @@
+/* Global styles */
 :root {
   --primary-color: #ca3434;
   --secondary-color: #373434;
 }
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -12,58 +14,14 @@ html {
   font-family: "Poppins", sans-serif;
   font-weight: 550;
 }
-dialog {
-  display: felx;
-  margin: auto;
-  width: 75rem;
-  height: 40rem;
-  padding: 5rem;
+
+main {
+  width: 90%;
+  height: 100%;
+  margin-left: auto;
+  padding: 20px;
 }
 
-.done-btn {
-  font-family: 'poppins', sans-serif;
-  background-color: white;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 1.3rem 2.5rem;
-  margin: 1rem;
-}
-
-.class-container {
-  display: flex;
-}
-.add-task-btn {
-  width: 7rem;
-  height: 7rem;
-  position: fixed;
-  bottom: 3rem;
-  right: 3rem;
-}
-input {
-  background-color: rgb(240, 240, 240);
-  font-size: 1.5rem;
-  padding: 1rem 2rem;
-  font-family: "Poppins", sans-serif;
-  font-weight: 550;
-  border: none;
-}
-
-input:focus {
-  outline: none;
-}
-
-.task-container {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-}
-.task-container:hover {
-  background-color: rgb(240, 240, 240);
-}
-.check-circle {
-  width: 1.6rem;
-  height: 1.6rem;
-}
 header {
   height: 120px;
   width: 100%;
@@ -85,15 +43,69 @@ nav {
   flex-direction: column;
   padding: 10px;
 }
-main {
-  width: 90%;
-  height: 100%;
-  margin-left: auto;
-  padding: 20px;
+
+/* Typorgraphy */
+input {
+  background-color: rgb(240, 240, 240);
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 550;
+  border: none;
 }
+
+input:focus {
+  outline: none;
+}
+
+dialog {
+  display: felx;
+  align-items: center;
+  margin: auto;
+  width: 75rem;
+  height: 40rem;
+  padding: 5rem;
+}
+
 p {
   margin: 5px;
   display: inline-block;
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+.task-container:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.add-task-btn {
+  width: 7rem;
+  height: 7rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.done-btn {
+  font-family: 'poppins', sans-serif;
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 1.3rem 3rem;
+  position: absolute;
+  display: block;
+  margin: 1rem;
+  bottom: .5rem;
+  width: 95%;
+  left: 1rem;
+}
+
+.check-circle {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .title.checked {
