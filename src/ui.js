@@ -1,11 +1,14 @@
 import "boxicons";
-export function createInputAndButton() {
+export function createTaskCreationEl() {
+  const taskModal = document.createElement("dialog");
+  taskModal.className = " task-modal";
   const titleInput = document.createElement("input");
-  titleInput.style.border = 'none';
+  titleInput.setAttribute("placeholder", "Enter Title")
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
+  doneBtn.className = "done-btn"
 
-  return { titleInput, doneBtn }; // Return both elements as an object
+  return { titleInput, doneBtn, taskModal }; // Return both elements as an object
 }
 
 export default function createTaskUi(task) {
@@ -21,5 +24,5 @@ export default function createTaskUi(task) {
   taskContainer.appendChild(checkcircle);
   taskContainer.appendChild(titleText);
   mainTasksContainer.appendChild(taskContainer);
-  return {checkcircle , titleText};
+  return { checkcircle, titleText };
 }

@@ -12,17 +12,37 @@ html {
   font-family: "Poppins", sans-serif;
   font-weight: 550;
 }
+dialog {
+  display: felx;
+  margin: auto;
+  width: 75rem;
+  height: 40rem;
+  padding: 5rem;
+}
+
+.done-btn {
+  font-family: 'poppins', sans-serif;
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 1.3rem 2.5rem;
+  margin: 1rem;
+}
 
 .class-container {
   display: flex;
 }
 .add-task-btn {
-  margin-bottom: 10px;
+  width: 7rem;
+  height: 7rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
 }
 input {
   background-color: rgb(240, 240, 240);
   font-size: 1.5rem;
-  padding: 5px;
+  padding: 1rem 2rem;
   font-family: "Poppins", sans-serif;
   font-weight: 550;
   border: none;
