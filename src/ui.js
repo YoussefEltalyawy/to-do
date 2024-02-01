@@ -4,11 +4,13 @@ export function createTaskCreationEl() {
   taskModal.className = " task-modal";
   const titleInput = document.createElement("input");
   titleInput.setAttribute("placeholder", "Enter Title")
+  const descriptionInput = document.createElement("input");
+  descriptionInput.setAttribute("placeholder", "Enter Description")
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
   doneBtn.className = "done-btn"
 
-  return { titleInput, doneBtn, taskModal }; // Return both elements as an object
+  return { taskModal, titleInput, doneBtn, descriptionInput }; // Return both elements as an object
 }
 
 export default function createTaskUi(task) {

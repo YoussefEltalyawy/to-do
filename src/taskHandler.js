@@ -5,25 +5,28 @@ import createTaskUi from "./ui.js";
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
   const mainTasksContainer = document.querySelector(".main-tasks-container");
-  const { titleInput, doneBtn,taskModal } = createTaskCreationEl();
+  const { taskModal, titleInput, doneBtn, descriptionInput } = createTaskCreationEl();
   function handleAddTask() {
     taskModal.appendChild(titleInput);
+    taskModal.appendChild(descriptionInput);
     taskModal.appendChild(doneBtn);
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
   }
   function handleDoneBtn() {
-    taskModal.close()
+    taskModal.close();
     const title = titleInput.value;
+    const description = descriptionInput.value;
     if (!title) {
       alert("Title cannot be empty");
       return;
     }
     titleInput.value = "";
-    titleInput.remove();
-    doneBtn.remove();
-    const task = new Task(title, false);
+    descriptionInput.value = "";
+    const task = new Task(title, description, false);
+    console.log(task.description)
     const { checkcircle, titleText } = createTaskUi(task);
+
     function markCheckCircle() {
       if (task.checked == false) {
         checkcircle.setAttribute("name", "check-circle");
@@ -35,6 +38,7 @@ export default function createTask() {
         return;
       }
     }
+    
     checkcircle.addEventListener("click", markCheckCircle);
   }
   addTaskBtn.addEventListener("click", handleAddTask);
