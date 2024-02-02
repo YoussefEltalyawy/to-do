@@ -5,8 +5,7 @@ import createTaskUi from "./ui.js";
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
   const mainTasksContainer = document.querySelector(".main-tasks-container");
-  const { taskModal, titleInput, doneBtn, descriptionInput } =
-    createTaskCreationEl();
+  const { taskModal, titleInput, doneBtn, descriptionInput } = createTaskCreationEl();
   function handleAddTask() {
     taskModal.appendChild(titleInput);
     taskModal.appendChild(descriptionInput);
@@ -14,17 +13,23 @@ export default function createTask() {
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
   }
-  function handleDoneBtn() {
-    taskModal.close();
+  
+  function createTaskFromInputs() {
     const title = titleInput.value;
     const description = descriptionInput.value;
     if (!title) {
       alert("Title cannot be empty");
       return;
     }
+    const task = new Task(title, description, false);
     titleInput.value = "";
     descriptionInput.value = "";
-    const task = new Task(title, description, false);
+    return task;
+  }
+
+  function handleDoneBtn() {
+    const task = createTaskFromInputs();
+    taskModal.close();
     const { checkcircle, titleText, detailsBtn } = createTaskUi(task);
 
     function markCheckCircle() {
@@ -54,17 +59,14 @@ export default function createTask() {
       // Create a span for the "Title:" text with a different color
       const titleSpan = document.createElement("span");
       titleSpan.textContent = "Title: ";
-      // titleSpan.style.color = "blue"; // Or any color you prefer
 
       const titleH2 = document.createElement("h2");
       titleH2.appendChild(titleSpan); // Append the span to the h2 element
       titleH2.appendChild(document.createTextNode(task.title)); // Append the task title
       detailsModal.appendChild(titleH2);
 
-      // Similarly for the "Description:" text
       const descriptionSpan = document.createElement("span");
       descriptionSpan.textContent = "Description: ";
-      // descriptionSpan.style.color = "blue";
 
       const descriptionH2 = document.createElement("h2");
       descriptionH2.appendChild(descriptionSpan);
