@@ -67,9 +67,17 @@ dialog {
   padding: 5rem;
 }
 
+h2.placeholder {
+  color: var(--primary-color);
+}
+
 p {
   margin: 5px;
   display: inline-block;
+}
+
+span {
+  color: var(--primary-color);
 }
 
 .task-container {
@@ -79,6 +87,7 @@ p {
 }
 .task-container:hover {
   background-color: rgb(240, 240, 240);
+  
 }
 
 .add-task-btn {
@@ -111,4 +120,33 @@ p {
 .title.checked {
   color: #808080;
   text-decoration: line-through;
+}
+.details-btn {
+  font-family: 'poppins', sans-serif;
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: .5rem 1rem;
+  position: absolute;
+  right: 10rem;
+}
+
+.details-btn.disabled {
+  border-color: #945c5cb9;
+  color: #945c5cb9;
+}
+
+dialog h1 {
+  font-size: 2.7rem;
+}
+dialog h2 {
+  font-size: 1.8rem;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
 }
