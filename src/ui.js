@@ -2,6 +2,9 @@ import "boxicons";
 export function createTaskCreationEl() {
   const taskModal = document.createElement("dialog");
   taskModal.className = " task-modal";
+  const modalH1 = document.createElement("h1");
+  modalH1.textContent = "Add Task Details:";
+  taskModal.appendChild(modalH1);
   const titleInput = document.createElement("input");
   titleInput.setAttribute("placeholder", "Enter Title")
   const descriptionInput = document.createElement("input");
@@ -23,8 +26,12 @@ export default function createTaskUi(task) {
   const titleText = document.createElement("p");
   titleText.className = "title";
   titleText.textContent = task.title;
+  const detailsBtn = document.createElement("button")
+  detailsBtn.textContent = "Details"
+  detailsBtn.className = "details-btn";
   taskContainer.appendChild(checkcircle);
   taskContainer.appendChild(titleText);
+  taskContainer.appendChild(detailsBtn);
   mainTasksContainer.appendChild(taskContainer);
-  return { checkcircle, titleText };
+  return { checkcircle, titleText, detailsBtn };
 }
