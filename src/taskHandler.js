@@ -1,18 +1,35 @@
+import task from "./task.js";
 import Task from "./task.js";
 import { createTaskCreationEl } from "./ui.js";
 import { createTaskUi } from "./ui.js";
 import { createAndPopulateDetailsModal } from "./ui.js";
-// import Intl from 'intl'
 
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
   const mainTasksContainer = document.querySelector(".main-tasks-container");
-  const { taskModal, titleInput, doneBtn, descriptionInput, dueDateInput } =
-    createTaskCreationEl();
+  const {
+    taskModal,
+    titleInput,
+    descriptionInput,
+    dueDateInput,
+    highPriorityInput,
+    highPriorityLabel,
+    mediumPriorityInput,
+    mediumPriorityLabel,
+    lowPriorityInput,
+    lowPriorityLabel,
+    doneBtn,
+  } = createTaskCreationEl();
   function handleAddTask() {
     taskModal.appendChild(titleInput);
     taskModal.appendChild(descriptionInput);
     taskModal.appendChild(dueDateInput);
+    taskModal.appendChild(highPriorityInput);
+    taskModal.appendChild(highPriorityLabel);
+    taskModal.appendChild(mediumPriorityInput);
+    taskModal.appendChild(mediumPriorityLabel);
+    taskModal.appendChild(lowPriorityInput);
+    taskModal.appendChild(lowPriorityLabel);
     taskModal.appendChild(doneBtn);
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
@@ -26,11 +43,24 @@ export default function createTask() {
       alert("Please enter a title for the task.");
       return;
     } else if (title) {
-      const task = new Task(title, description, dueDate, false);
-      titleInput.value = "";
-      descriptionInput.value = "";
-      dueDateInput.value = "";
-      return task;
+      if(document.querySelector('input[name="priority"]:checked') == null) {
+        const priority = "None"
+        const task = new Task(title, description, dueDate, priority, false);
+        titleInput.value = "";
+        descriptionInput.value = "";
+        dueDateInput.value = "";
+        return task;
+      }
+      else {
+        const selectedPriority = document.querySelector('input[name="priority"]:checked')
+        const priority = selectedPriority.value;
+        const task = new Task(title, description, dueDate, priority, false);
+        titleInput.value = "";
+        descriptionInput.value = "";
+        dueDateInput.value = "";
+        selectedPriority.checked = false;
+        return task;z
+      }
     }
   }
 
@@ -50,6 +80,8 @@ export default function createTask() {
           detailsBtn.disabled = true;
           detailsBtn.classList.add("disabled");
         } else {
+          console.log(task.checked);
+          console.log("No");
           return;
         }
       }
