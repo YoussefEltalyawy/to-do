@@ -56,26 +56,46 @@ export function createAndPopulateDetailsModal(task) {
   titleH2.appendChild(document.createTextNode(task.title)); // Append the task title
   detailsModal.appendChild(titleH2);
 
-  const descriptionSpan = document.createElement("span");
-  descriptionSpan.textContent = "Description: ";
+  if( task.description) {
+    const descriptionSpan = document.createElement("span");
+    descriptionSpan.textContent = "Description: ";
+  
+    const descriptionH2 = document.createElement("h2");
+    descriptionH2.appendChild(descriptionSpan);
+    descriptionH2.appendChild(document.createTextNode(task.description));
+    detailsModal.appendChild(descriptionH2);
+  }
+  else {
+    const descriptionSpan = document.createElement("span");
+    descriptionSpan.textContent = "Description: ";
+  
+    const descriptionH2 = document.createElement("h2");
+    descriptionH2.appendChild(descriptionSpan);
+    descriptionH2.appendChild(document.createTextNode("None"));
+    detailsModal.appendChild(descriptionH2);
+  }
 
-  const descriptionH2 = document.createElement("h2");
-  descriptionH2.appendChild(descriptionSpan);
-  descriptionH2.appendChild(document.createTextNode(task.description));
-  detailsModal.appendChild(descriptionH2);
+  if (task.dueDate) {
+    const formattedDueDate = new Intl.DateTimeFormat("en-US", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }).format(new Date(task.dueDate));
 
-  const formattedDueDate = new Intl.DateTimeFormat("en-US", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(task.dueDate));
-
-  const dueDateSpan = document.createElement("span");
-  dueDateSpan.textContent = "Due Date: ";
-  const dueDateH2 = document.createElement("h2");
-  dueDateH2.appendChild(dueDateSpan);
-  dueDateH2.appendChild(document.createTextNode(formattedDueDate));
-  detailsModal.appendChild(dueDateH2);
+    const dueDateSpan = document.createElement("span");
+    dueDateSpan.textContent = "Due Date: ";
+    const dueDateH2 = document.createElement("h2");
+    dueDateH2.appendChild(dueDateSpan);
+    dueDateH2.appendChild(document.createTextNode(formattedDueDate));
+    detailsModal.appendChild(dueDateH2);
+  } else {
+    const dueDateSpan = document.createElement("span");
+    dueDateSpan.textContent = "Due Date: ";
+    const dueDateH2 = document.createElement("h2");
+    dueDateH2.appendChild(dueDateSpan);
+    dueDateH2.appendChild(document.createTextNode("None"));
+    detailsModal.appendChild(dueDateH2);
+  }
 
   const closeModalBtn = document.createElement("box-icon");
   closeModalBtn.setAttribute("name", "x");
