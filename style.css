@@ -131,6 +131,16 @@ span {
   right: 10rem;
 }
 
+.delete-btn {
+  position: absolute;
+  right: 7rem;
+  opacity: 0%;
+}
+
+.visible {
+  opacity: 100%;
+}
+
 .details-btn.disabled {
   border-color: #945c5cb9;
   color: #945c5cb9;
