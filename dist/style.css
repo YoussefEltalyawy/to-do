@@ -150,3 +150,7 @@ dialog h2 {
   width: 2rem;
   height: 2rem;
 }
+
+.due-date-input {
+  display: block;
+}

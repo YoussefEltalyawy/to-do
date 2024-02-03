@@ -1,5 +1,5 @@
 import "boxicons";
-const mainTasksContainer = document.querySelector(".main-tasks-container")
+const mainTasksContainer = document.querySelector(".main-tasks-container");
 export function createTaskCreationEl() {
   const taskModal = document.createElement("dialog");
   taskModal.className = " task-modal";
@@ -10,14 +10,17 @@ export function createTaskCreationEl() {
   titleInput.setAttribute("placeholder", "Enter Title");
   const descriptionInput = document.createElement("input");
   descriptionInput.setAttribute("placeholder", "Enter Description");
+  const dueDateInput = document.createElement("input");
+  dueDateInput.type = "date";
+  dueDateInput.className = "due-date-input";
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
   doneBtn.className = "done-btn";
 
-  return { taskModal, titleInput, doneBtn, descriptionInput }; // Return both elements as an object
+  return { taskModal, titleInput, doneBtn, descriptionInput, dueDateInput }; // Return both elements as an object
 }
 
-export function createTaskUi(task) {;
+export function createTaskUi(task) {
   const taskContainer = document.createElement("div");
   taskContainer.className = "task-container";
   const checkcircle = document.createElement("box-icon");
@@ -60,6 +63,19 @@ export function createAndPopulateDetailsModal(task) {
   descriptionH2.appendChild(descriptionSpan);
   descriptionH2.appendChild(document.createTextNode(task.description));
   detailsModal.appendChild(descriptionH2);
+
+  const formattedDueDate = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(task.dueDate));
+
+  const dueDateSpan = document.createElement("span");
+  dueDateSpan.textContent = "Due Date: ";
+  const dueDateH2 = document.createElement("h2");
+  dueDateH2.appendChild(dueDateSpan);
+  dueDateH2.appendChild(document.createTextNode(formattedDueDate));
+  detailsModal.appendChild(dueDateH2);
 
   const closeModalBtn = document.createElement("box-icon");
   closeModalBtn.setAttribute("name", "x");
