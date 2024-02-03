@@ -44,7 +44,6 @@ export function createTaskCreationEl() {
   lowPriorityLabel.textContent = "Low"
   lowPriorityLabel.setAttribute("for", "low-priority");
 
-  const selectedPriority = document.querySelector('input[name="priority"]:checked')
 
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
@@ -77,12 +76,25 @@ export function createTaskUi(task) {
   const detailsBtn = document.createElement("button");
   detailsBtn.textContent = "Details";
   detailsBtn.className = "details-btn";
+  const deleteBtn = document.createElement("box-icon");
+  deleteBtn.setAttribute("name", "trash");
+  deleteBtn.className = "delete-btn";
   taskContainer.appendChild(checkcircle);
   taskContainer.appendChild(titleText);
   taskContainer.appendChild(detailsBtn);
+  taskContainer.appendChild(deleteBtn);
   mainTasksContainer.appendChild(taskContainer);
-  return { checkcircle, titleText, detailsBtn };
+  taskContainer.addEventListener("mouseover", () => {
+    deleteBtn.classList.add("visible");
+    console.log("shown")
+  });
+  taskContainer.addEventListener("mouseout", () => {
+    deleteBtn.classList.remove("visible");
+    console.log("hidden")
+  });
+  return { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer };
 }
+
 
 export function createAndPopulateDetailsModal(task) {
   const detailsModal = document.createElement("dialog");

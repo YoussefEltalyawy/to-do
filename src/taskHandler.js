@@ -43,23 +43,25 @@ export default function createTask() {
       alert("Please enter a title for the task.");
       return;
     } else if (title) {
-      if(document.querySelector('input[name="priority"]:checked') == null) {
-        const priority = "None"
+      if (document.querySelector('input[name="priority"]:checked') == null) {
+        const priority = "None";
         const task = new Task(title, description, dueDate, priority, false);
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
         return task;
-      }
-      else {
-        const selectedPriority = document.querySelector('input[name="priority"]:checked')
+      } else {
+        const selectedPriority = document.querySelector(
+          'input[name="priority"]:checked'
+        );
         const priority = selectedPriority.value;
         const task = new Task(title, description, dueDate, priority, false);
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
         selectedPriority.checked = false;
-        return task;z
+        return task;
+        z;
       }
     }
   }
@@ -68,7 +70,8 @@ export default function createTask() {
     const task = createTaskFromInputs();
     taskModal.close();
     if (task) {
-      const { checkcircle, titleText, detailsBtn } = createTaskUi(task);
+      const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
+        createTaskUi(task);
 
       function markCheckCircle() {
         if (task.checked == false) {
@@ -86,10 +89,15 @@ export default function createTask() {
         }
       }
 
+      function handleDeleteTask() {
+        mainTasksContainer.removeChild(taskContainer);
+      }
+
       checkcircle.addEventListener("click", markCheckCircle);
       detailsBtn.addEventListener("click", () => {
         createAndPopulateDetailsModal(task);
       });
+      deleteBtn.addEventListener("click", handleDeleteTask);
     } else {
       return;
     }
