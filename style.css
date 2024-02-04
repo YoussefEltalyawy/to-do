@@ -32,7 +32,7 @@ header {
   padding: 10px;
 }
 nav {
-  width: 10%;
+  width: 11%;
   background-color: var(--secondary-color);
   color: white;
   position: fixed;
@@ -47,11 +47,15 @@ nav {
 /* Typorgraphy */
 input {
   background-color: rgb(240, 240, 240);
-  font-size: 1.5rem;
-  padding: 1rem 2rem;
+  font-size: 1.3rem;
+  padding: .7rem 1.7rem;
   font-family: "Poppins", sans-serif;
   font-weight: 550;
   border: none;
+}
+
+h2 {
+  margin-bottom: 10px;
 }
 
 input:focus {
@@ -147,7 +151,7 @@ span {
 }
 
 dialog h1 {
-  font-size: 2.7rem;
+  font-size: 2.5rem;
 }
 dialog h2 {
   font-size: 1.8rem;
@@ -164,3 +168,31 @@ dialog h2 {
 .due-date-input {
   display: block;
 }
+
+.task-modal h3 {
+  color: var(--primary-color);
+}
+
+.new-project-btn {
+  display: flex;
+  align-items: center;
+}
+.project-name-input {
+  background-color: #585858;
+  color: white;
+  font-size: .9rem;
+  padding: .5rem .7rem;
+  width: 10rem;
+  display: inline;
+}
+
+.submit-project-btn {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.project-input-container {
+  display: flex;
+  align-items: center;
+}
+

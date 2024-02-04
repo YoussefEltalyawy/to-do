@@ -19,15 +19,22 @@
     <header>
       <h1>To-Do by @yousefeltalyawy</h1>
     </header>
-    <nav>
+    <nav class="nav">
+      <h2>Inbox</h2>
       <h2>Projects:</h2>
-      <p>Project #1</p>
-      <p>Project #2</p>
-      <p>Project #3</p>
+      <div class="new-project-btn">
+        <box-icon name="plus" color="#ffff"></box-icon>
+        <p>New Project</p>
+      </div>
     </nav>
 
     <main>
-      <box-icon type='solid' name='plus-circle' class="add-task-btn" color="#ca3434"></box-icon>
+      <box-icon
+        type="solid"
+        name="plus-circle"
+        class="add-task-btn"
+        color="#ca3434"
+      ></box-icon>
       <div class="main-tasks-container"></div>
     </main>
   </body>
