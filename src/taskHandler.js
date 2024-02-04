@@ -1,35 +1,47 @@
-import task from "./task.js";
 import Task from "./task.js";
 import { createTaskCreationEl } from "./ui.js";
 import { createTaskUi } from "./ui.js";
 import { createAndPopulateDetailsModal } from "./ui.js";
+import { createProjectCreationEl } from "./ui.js";
 
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
   const mainTasksContainer = document.querySelector(".main-tasks-container");
   const {
     taskModal,
+    titleH3,
     titleInput,
+    descriptionH3,
     descriptionInput,
+    dueDateH3,
     dueDateInput,
+    priorityH3,
     highPriorityInput,
     highPriorityLabel,
     mediumPriorityInput,
     mediumPriorityLabel,
     lowPriorityInput,
     lowPriorityLabel,
+    projectH3,
+    projectInput,
     doneBtn,
   } = createTaskCreationEl();
   function handleAddTask() {
+    taskModal.appendChild(titleH3);
     taskModal.appendChild(titleInput);
+    taskModal.appendChild(descriptionH3);
     taskModal.appendChild(descriptionInput);
+    taskModal.appendChild(dueDateH3)
     taskModal.appendChild(dueDateInput);
+    taskModal.appendChild(priorityH3);
     taskModal.appendChild(highPriorityInput);
     taskModal.appendChild(highPriorityLabel);
     taskModal.appendChild(mediumPriorityInput);
     taskModal.appendChild(mediumPriorityLabel);
     taskModal.appendChild(lowPriorityInput);
     taskModal.appendChild(lowPriorityLabel);
+    taskModal.appendChild(projectH3);
+    taskModal.appendChild(projectInput);
     taskModal.appendChild(doneBtn);
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
@@ -105,3 +117,14 @@ export default function createTask() {
   addTaskBtn.addEventListener("click", handleAddTask);
   doneBtn.addEventListener("click", handleDoneBtn);
 }
+function ProjectHandler() {
+  const nav = document.querySelector(".nav");
+  const addProjectBtn = document.querySelector(".new-project-btn");
+  const {projectInputContainer, projectNameInput, submitProjectBtn} = createProjectCreationEl();
+  function handleProjectCreation() {
+    nav.appendChild(projectInputContainer);
+    console.log("clicked")
+  }
+  addProjectBtn.addEventListener("click",handleProjectCreation);
+}
+ProjectHandler()

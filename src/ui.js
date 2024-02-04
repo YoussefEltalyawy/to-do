@@ -6,14 +6,25 @@ export function createTaskCreationEl() {
   const modalH1 = document.createElement("h1");
   modalH1.textContent = "Add Task Details:";
   taskModal.appendChild(modalH1);
+
+  const titleH3 = document.createElement("h3");
+  titleH3.textContent = "Title:";
   const titleInput = document.createElement("input");
   titleInput.setAttribute("placeholder", "Enter Title");
+
+  const descriptionH3 = document.createElement("h3");
+  descriptionH3.textContent = "Description:";
   const descriptionInput = document.createElement("input");
   descriptionInput.setAttribute("placeholder", "Enter Description");
+
+  const dueDateH3 = document.createElement("h3");
+  dueDateH3.textContent = "Due Date:";
   const dueDateInput = document.createElement("input");
   dueDateInput.type = "date";
   dueDateInput.className = "due-date-input";
 
+  const priorityH3 = document.createElement("h3");
+  priorityH3.textContent = "Priority:";
   const highPriorityInput = document.createElement("input");
   highPriorityInput.type = "radio";
   highPriorityInput.id = "high-priority";
@@ -21,7 +32,7 @@ export function createTaskCreationEl() {
   highPriorityInput.value = "High";
 
   const highPriorityLabel = document.createElement("label");
-  highPriorityLabel.textContent = "High"
+  highPriorityLabel.textContent = "High";
   highPriorityLabel.setAttribute("for", "high-priority");
 
   const mediumPriorityInput = document.createElement("input");
@@ -31,7 +42,7 @@ export function createTaskCreationEl() {
   mediumPriorityInput.value = "Medium";
 
   const mediumPriorityLabel = document.createElement("label");
-  mediumPriorityLabel.textContent = "Medium"
+  mediumPriorityLabel.textContent = "Medium";
   mediumPriorityLabel.setAttribute("for", "medium-priority");
 
   const lowPriorityInput = document.createElement("input");
@@ -41,9 +52,13 @@ export function createTaskCreationEl() {
   lowPriorityInput.value = "Low";
 
   const lowPriorityLabel = document.createElement("label");
-  lowPriorityLabel.textContent = "Low"
+  lowPriorityLabel.textContent = "Low";
   lowPriorityLabel.setAttribute("for", "low-priority");
 
+  const projectH3 = document.createElement("h3");
+  projectH3.textContent = "Project: ";
+  const projectInput = document.createElement("select");
+  projectInput.name = "projects";
 
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
@@ -51,15 +66,21 @@ export function createTaskCreationEl() {
 
   return {
     taskModal,
+    titleH3,
     titleInput,
+    descriptionH3,
     descriptionInput,
+    dueDateH3,
     dueDateInput,
+    priorityH3,
     highPriorityInput,
     highPriorityLabel,
     mediumPriorityInput,
     mediumPriorityLabel,
     lowPriorityInput,
     lowPriorityLabel,
+    projectH3,
+    projectInput,
     doneBtn,
   };
 }
@@ -86,15 +107,14 @@ export function createTaskUi(task) {
   mainTasksContainer.appendChild(taskContainer);
   taskContainer.addEventListener("mouseover", () => {
     deleteBtn.classList.add("visible");
-    console.log("shown")
+    console.log("shown");
   });
   taskContainer.addEventListener("mouseout", () => {
     deleteBtn.classList.remove("visible");
-    console.log("hidden")
+    console.log("hidden");
   });
   return { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer };
 }
-
 
 export function createAndPopulateDetailsModal(task) {
   const detailsModal = document.createElement("dialog");
@@ -157,7 +177,7 @@ export function createAndPopulateDetailsModal(task) {
   prioritySpan.textContent = "Priority: ";
   const priorityH2 = document.createElement("h2");
   priorityH2.appendChild(prioritySpan);
-  priorityH2.appendChild(document.createTextNode(task.priority))
+  priorityH2.appendChild(document.createTextNode(task.priority));
   detailsModal.appendChild(priorityH2);
 
   const closeModalBtn = document.createElement("box-icon");
@@ -168,4 +188,18 @@ export function createAndPopulateDetailsModal(task) {
   closeModalBtn.addEventListener("click", () => {
     detailsModal.close();
   });
+}
+export function createProjectCreationEl() {
+  const projectInputContainer = document.createElement("div");
+  projectInputContainer.className = "project-input-container";
+  const projectNameInput = document.createElement("input");
+  projectNameInput.className = "project-name-input";
+  projectNameInput.placeholder = "Project Name...";
+  const submitProjectBtn = document.createElement("box-icon");
+  submitProjectBtn.setAttribute("name", "check");
+  submitProjectBtn.setAttribute("color", "#ffff");
+  submitProjectBtn.className = "submit-project-btn";
+  projectInputContainer.appendChild(projectNameInput);
+  projectInputContainer.appendChild(submitProjectBtn)
+  return { projectInputContainer, projectNameInput, submitProjectBtn };
 }
