@@ -28,10 +28,10 @@ export default function handleTasksAndProjects() {
   const mainTasksContainer = document.querySelector(".main-tasks-container");
   const tasksArr = [];
   const addTaskBtn = document.querySelector(".add-task-btn");
-  // const currentPage = "inbox";
 
   function projectHandler() {
     const nav = document.querySelector(".nav");
+    const inbox = document.querySelector(".inbox");
     const addProjectBtn = document.querySelector(".new-project-btn");
     const { projectInputContainer, projectNameInput, submitProjectBtn } =
       createProjectCreationEl();
@@ -53,6 +53,7 @@ export default function handleTasksAndProjects() {
         mainTasksContainer.innerHTML = "";
         tasksArr.forEach((task) => {
           if (task.project == projectName) {
+            // console.log("clicked")
             const {
               checkcircle,
               titleText,
@@ -62,19 +63,48 @@ export default function handleTasksAndProjects() {
             } = createTaskUi(task);
             if (task.checked == true) {
               markCheckCircle(checkcircle, task, titleText, detailsBtn);
-              console.log("task was checked");
+              // console.log("task was checked");
             } else {
               console.log(task.checked);
-              console.log("task was not checked");
+              // console.log("task was not checked");
             }
             detailsBtn.addEventListener("click", () => {
               createAndPopulateDetailsModal(task);
-              console.log("done");
+              // console.log("done");
             });
             deleteBtn.addEventListener("click", () => {
               handleDeleteTask(task, taskContainer);
             });
           }
+          else {
+            console.log("here is the problem")
+          }
+        });
+      });
+      inbox.addEventListener("click", () => {
+        mainTasksContainer.innerHTML = "";
+        tasksArr.forEach((task) => {
+          const {
+            checkcircle,
+            titleText,
+            detailsBtn,
+            deleteBtn,
+            taskContainer,
+          } = createTaskUi(task);
+          if (task.checked == true) {
+            markCheckCircle(checkcircle, task, titleText, detailsBtn);
+            // console.log("task was checked");
+          } else {
+            // console.log("task was not checked");
+            return;
+          }
+          detailsBtn.addEventListener("click", () => {
+            createAndPopulateDetailsModal(task);
+            // console.log("done");
+          });
+          deleteBtn.addEventListener("click", () => {
+            handleDeleteTask(task, taskContainer);
+          });
         });
       });
     });
