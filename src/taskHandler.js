@@ -1,3 +1,4 @@
+import task from "./task.js";
 import Task from "./task.js";
 import { createTaskCreationEl } from "./ui.js";
 import { createTaskUi } from "./ui.js";
@@ -23,10 +24,11 @@ const {
   projectInput,
   doneBtn,
 } = createTaskCreationEl();
+const mainTasksContainer = document.querySelector(".main-tasks-container");
+const tasksArr = [];
 
 function ProjectHandler() {
   const nav = document.querySelector(".nav");
-  const projectsArray = [];
   const addProjectBtn = document.querySelector(".new-project-btn");
   const { projectInputContainer, projectNameInput, submitProjectBtn } =
     createProjectCreationEl();
@@ -36,7 +38,6 @@ function ProjectHandler() {
   addProjectBtn.addEventListener("click", handleProjectCreation);
   submitProjectBtn.addEventListener("click", () => {
     const projectName = projectNameInput.value;
-    projectsArray.push(projectName);
     const projectH3 = document.createElement("h3");
     projectH3.textContent = projectName;
     nav.removeChild(projectInputContainer);
@@ -44,15 +45,28 @@ function ProjectHandler() {
     projectNameInput.value = "";
     const newOption = document.createElement("option");
     newOption.textContent = projectName;
-    projectInput.appendChild(newOption)
-
+    projectInput.appendChild(newOption);
+    projectH3.addEventListener("click", () => {
+      mainTasksContainer.innerHTML = "";
+      // if(task.project == projectName) {
+      //   console.log(task.title);
+      //   console.log("did it work")
+      // }
+      tasksArr.forEach((task) => {
+        // console.log(task.project);
+        if (task.project == projectName) {
+          console.log(task.title);
+          console.log("did it work");
+          createTaskUi(task);
+        }
+      });
+    });
   });
 }
 ProjectHandler();
 
 export default function createTask() {
   const addTaskBtn = document.querySelector(".add-task-btn");
-  const mainTasksContainer = document.querySelector(".main-tasks-container");
   function handleAddTask() {
     taskModal.appendChild(titleH3);
     taskModal.appendChild(titleInput);
@@ -85,22 +99,38 @@ export default function createTask() {
     } else if (title) {
       if (document.querySelector('input[name="priority"]:checked') == null) {
         const priority = "None";
-        const task = new Task(title, description, dueDate, priority, project, false);
-        console.log(task)
+        const task = new Task(
+          title,
+          description,
+          dueDate,
+          priority,
+          project,
+          false
+        );
+        tasksArr.push(task);
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
+        projectInput.value = "";
         return task;
       } else {
         const selectedPriority = document.querySelector(
           'input[name="priority"]:checked'
         );
         const priority = selectedPriority.value;
-        const task = new Task(title, description, dueDate, priority, false);
+        const task = new Task(
+          title,
+          description,
+          dueDate,
+          priority,
+          project,
+          false
+        );
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
         selectedPriority.checked = false;
+        projectInput.value = "";
         return task;
         z;
       }
@@ -120,12 +150,9 @@ export default function createTask() {
           checkcircle.setAttribute("color", "#808080");
           task.checked = true;
           titleText.classList.add("checked");
-          console.log("Checked");
           detailsBtn.disabled = true;
           detailsBtn.classList.add("disabled");
         } else {
-          console.log(task.checked);
-          console.log("No");
           return;
         }
       }

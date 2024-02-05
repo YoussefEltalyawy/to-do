@@ -107,11 +107,9 @@ export function createTaskUi(task) {
   mainTasksContainer.appendChild(taskContainer);
   taskContainer.addEventListener("mouseover", () => {
     deleteBtn.classList.add("visible");
-    console.log("shown");
   });
   taskContainer.addEventListener("mouseout", () => {
     deleteBtn.classList.remove("visible");
-    console.log("hidden");
   });
   return { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer };
 }
@@ -179,6 +177,13 @@ export function createAndPopulateDetailsModal(task) {
   priorityH2.appendChild(prioritySpan);
   priorityH2.appendChild(document.createTextNode(task.priority));
   detailsModal.appendChild(priorityH2);
+
+  const projectSpan = document.createElement("span");
+  projectSpan.textContent = "Project: "
+  const projectH2 = document.createElement("h2");
+  projectH2.appendChild(projectSpan);
+  projectH2.appendChild(document.createTextNode(task.project));
+  detailsModal.appendChild(projectH2);
 
   const closeModalBtn = document.createElement("box-icon");
   closeModalBtn.setAttribute("name", "x");
