@@ -119,12 +119,21 @@ export default function createTask() {
 }
 function ProjectHandler() {
   const nav = document.querySelector(".nav");
+  const projectsArray = [];
   const addProjectBtn = document.querySelector(".new-project-btn");
   const {projectInputContainer, projectNameInput, submitProjectBtn} = createProjectCreationEl();
   function handleProjectCreation() {
     nav.appendChild(projectInputContainer);
-    console.log("clicked")
   }
   addProjectBtn.addEventListener("click",handleProjectCreation);
+  submitProjectBtn.addEventListener("click",() => {
+    const projectName = projectNameInput.value;
+    projectsArray.push(projectName)
+    const projectH3 = document.createElement("h3");
+    projectH3.textContent = projectName;
+    nav.removeChild(projectInputContainer);
+    nav.appendChild(projectH3);
+    projectNameInput.value = "";
+  });
 }
 ProjectHandler()
