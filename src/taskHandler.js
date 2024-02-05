@@ -5,68 +5,82 @@ import { createTaskUi } from "./ui.js";
 import { createAndPopulateDetailsModal } from "./ui.js";
 import { createProjectCreationEl } from "./ui.js";
 
-const {
-  taskModal,
-  titleH3,
-  titleInput,
-  descriptionH3,
-  descriptionInput,
-  dueDateH3,
-  dueDateInput,
-  priorityH3,
-  highPriorityInput,
-  highPriorityLabel,
-  mediumPriorityInput,
-  mediumPriorityLabel,
-  lowPriorityInput,
-  lowPriorityLabel,
-  projectH3,
-  projectInput,
-  doneBtn,
-} = createTaskCreationEl();
-const mainTasksContainer = document.querySelector(".main-tasks-container");
-const tasksArr = [];
+export default function handleTasksAndProjects() {
+  const {
+    taskModal,
+    titleH3,
+    titleInput,
+    descriptionH3,
+    descriptionInput,
+    dueDateH3,
+    dueDateInput,
+    priorityH3,
+    highPriorityInput,
+    highPriorityLabel,
+    mediumPriorityInput,
+    mediumPriorityLabel,
+    lowPriorityInput,
+    lowPriorityLabel,
+    projectH3,
+    projectInput,
+    doneBtn,
+  } = createTaskCreationEl();
+  const mainTasksContainer = document.querySelector(".main-tasks-container");
+  const tasksArr = [];
+  const addTaskBtn = document.querySelector(".add-task-btn");
+  // const currentPage = "inbox";
 
-function ProjectHandler() {
-  const nav = document.querySelector(".nav");
-  const addProjectBtn = document.querySelector(".new-project-btn");
-  const { projectInputContainer, projectNameInput, submitProjectBtn } =
-    createProjectCreationEl();
-  function handleProjectCreation() {
-    nav.appendChild(projectInputContainer);
-  }
-  addProjectBtn.addEventListener("click", handleProjectCreation);
-  submitProjectBtn.addEventListener("click", () => {
-    const projectName = projectNameInput.value;
-    const projectH3 = document.createElement("h3");
-    projectH3.textContent = projectName;
-    nav.removeChild(projectInputContainer);
-    nav.appendChild(projectH3);
-    projectNameInput.value = "";
-    const newOption = document.createElement("option");
-    newOption.textContent = projectName;
-    projectInput.appendChild(newOption);
-    projectH3.addEventListener("click", () => {
-      mainTasksContainer.innerHTML = "";
-      // if(task.project == projectName) {
-      //   console.log(task.title);
-      //   console.log("did it work")
-      // }
-      tasksArr.forEach((task) => {
-        // console.log(task.project);
-        if (task.project == projectName) {
-          console.log(task.title);
-          console.log("did it work");
-          createTaskUi(task);
-        }
+  function projectHandler() {
+    const nav = document.querySelector(".nav");
+    const addProjectBtn = document.querySelector(".new-project-btn");
+    const { projectInputContainer, projectNameInput, submitProjectBtn } =
+      createProjectCreationEl();
+    function handleProjectCreation() {
+      nav.appendChild(projectInputContainer);
+    }
+    addProjectBtn.addEventListener("click", handleProjectCreation);
+    submitProjectBtn.addEventListener("click", () => {
+      const projectName = projectNameInput.value;
+      const projectH3 = document.createElement("h3");
+      projectH3.textContent = projectName;
+      nav.removeChild(projectInputContainer);
+      nav.appendChild(projectH3);
+      projectNameInput.value = "";
+      const newOption = document.createElement("option");
+      newOption.textContent = projectName;
+      projectInput.appendChild(newOption);
+      projectH3.addEventListener("click", () => {
+        mainTasksContainer.innerHTML = "";
+        tasksArr.forEach((task) => {
+          if (task.project == projectName) {
+            const {
+              checkcircle,
+              titleText,
+              detailsBtn,
+              deleteBtn,
+              taskContainer,
+            } = createTaskUi(task);
+            if (task.checked == true) {
+              markCheckCircle(checkcircle, task, titleText, detailsBtn);
+              console.log("task was checked");
+            } else {
+              console.log(task.checked);
+              console.log("task was not checked");
+            }
+            detailsBtn.addEventListener("click", () => {
+              createAndPopulateDetailsModal(task);
+              console.log("done");
+            });
+            deleteBtn.addEventListener("click", () => {
+              handleDeleteTask(task, taskContainer);
+            });
+          }
+        });
       });
     });
-  });
-}
-ProjectHandler();
+  }
+  projectHandler();
 
-export default function createTask() {
-  const addTaskBtn = document.querySelector(".add-task-btn");
   function handleAddTask() {
     taskModal.appendChild(titleH3);
     taskModal.appendChild(titleInput);
@@ -87,6 +101,7 @@ export default function createTask() {
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
   }
+  addTaskBtn.addEventListener("click", handleAddTask);
 
   function createTaskFromInputs() {
     const title = titleInput.value;
@@ -132,11 +147,9 @@ export default function createTask() {
         selectedPriority.checked = false;
         projectInput.value = "";
         return task;
-        z;
       }
     }
   }
-
   function handleDoneBtn() {
     const task = createTaskFromInputs();
     taskModal.close();
@@ -144,32 +157,33 @@ export default function createTask() {
       const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
         createTaskUi(task);
 
-      function markCheckCircle() {
-        if (task.checked == false) {
-          checkcircle.setAttribute("name", "check-circle");
-          checkcircle.setAttribute("color", "#808080");
-          task.checked = true;
-          titleText.classList.add("checked");
-          detailsBtn.disabled = true;
-          detailsBtn.classList.add("disabled");
-        } else {
-          return;
-        }
-      }
-
-      function handleDeleteTask() {
-        mainTasksContainer.removeChild(taskContainer);
-      }
-
-      checkcircle.addEventListener("click", markCheckCircle);
+      checkcircle.addEventListener("click", () => {
+        markCheckCircle(checkcircle, task, titleText, detailsBtn);
+      });
       detailsBtn.addEventListener("click", () => {
         createAndPopulateDetailsModal(task);
       });
-      deleteBtn.addEventListener("click", handleDeleteTask);
+      deleteBtn.addEventListener("click", () => {
+        handleDeleteTask(task, taskContainer);
+      });
     } else {
       return;
     }
   }
-  addTaskBtn.addEventListener("click", handleAddTask);
+  function markCheckCircle(checkcircle, task, titleText, detailsBtn) {
+    checkcircle.setAttribute("name", "check-circle");
+    checkcircle.setAttribute("color", "#808080");
+    task.checked = true;
+    titleText.classList.add("checked");
+    detailsBtn.disabled = true;
+    detailsBtn.classList.add("disabled");
+  }
+
+  function handleDeleteTask(task, taskContainer) {
+    mainTasksContainer.removeChild(taskContainer);
+    const taskIndex = tasksArr.indexOf(task);
+    tasksArr.splice(taskIndex, 1);
+  }
+
   doneBtn.addEventListener("click", handleDoneBtn);
 }

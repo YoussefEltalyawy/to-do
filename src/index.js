@@ -1,2 +1,2 @@
-import createTask from "./taskHandler";
-createTask();
+import handleTasksAndProjects from "./taskHandler";
+handleTasksAndProjects();
