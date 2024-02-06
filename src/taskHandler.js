@@ -4,7 +4,32 @@ import { createTaskCreationEl } from "./ui.js";
 import { createTaskUi } from "./ui.js";
 import { createAndPopulateDetailsModal } from "./ui.js";
 import { createProjectCreationEl } from "./ui.js";
-
+const mainTasksContainer = document.querySelector(".main-tasks-container");
+let tasksArr;
+if (!getDataInLocalStorage()) {
+  tasksArr = [];
+} else {
+  tasksArr = JSON.parse(getDataInLocalStorage());
+  tasksArr.forEach(function (task) {
+    const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
+      createTaskUi(task);
+    if (task.checked == true) {
+      markCheckCircle(checkcircle, task, titleText, detailsBtn);
+    } else {
+      console.log(task)
+      console.log(task.checked);
+    }
+    checkcircle.addEventListener("click", () => {
+      markCheckCircle(checkcircle, task, titleText, detailsBtn);
+    });
+    detailsBtn.addEventListener("click", () => {
+      createAndPopulateDetailsModal(task);
+    });
+    deleteBtn.addEventListener("click", () => {
+      handleDeleteTask(task, taskContainer);
+    });
+  });
+}
 export default function handleTasksAndProjects() {
   const {
     taskModal,
@@ -25,8 +50,6 @@ export default function handleTasksAndProjects() {
     projectInput,
     doneBtn,
   } = createTaskCreationEl();
-  const mainTasksContainer = document.querySelector(".main-tasks-container");
-  const tasksArr = [];
   const addTaskBtn = document.querySelector(".add-task-btn");
 
   function projectHandler() {
@@ -53,7 +76,6 @@ export default function handleTasksAndProjects() {
         mainTasksContainer.innerHTML = "";
         tasksArr.forEach((task) => {
           if (task.project == projectName) {
-            // console.log("clicked")
             const {
               checkcircle,
               titleText,
@@ -63,21 +85,17 @@ export default function handleTasksAndProjects() {
             } = createTaskUi(task);
             if (task.checked == true) {
               markCheckCircle(checkcircle, task, titleText, detailsBtn);
-              // console.log("task was checked");
             } else {
               console.log(task.checked);
-              // console.log("task was not checked");
             }
             detailsBtn.addEventListener("click", () => {
               createAndPopulateDetailsModal(task);
-              // console.log("done");
             });
             deleteBtn.addEventListener("click", () => {
               handleDeleteTask(task, taskContainer);
             });
-          }
-          else {
-            console.log("here is the problem")
+          } else {
+            console.log("here is the problem");
           }
         });
       });
@@ -93,9 +111,7 @@ export default function handleTasksAndProjects() {
           } = createTaskUi(task);
           if (task.checked == true) {
             markCheckCircle(checkcircle, task, titleText, detailsBtn);
-            // console.log("task was checked");
           } else {
-            // console.log("task was not checked");
             return;
           }
           detailsBtn.addEventListener("click", () => {
@@ -152,7 +168,10 @@ export default function handleTasksAndProjects() {
           project,
           false
         );
+        console.log(tasksArr);
         tasksArr.push(task);
+        console.log(tasksArr);
+        saveDataInLocalStorage();
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
@@ -171,6 +190,9 @@ export default function handleTasksAndProjects() {
           project,
           false
         );
+        tasksArr.push(task);
+        console.log(tasksArr);
+        saveDataInLocalStorage();
         titleInput.value = "";
         descriptionInput.value = "";
         dueDateInput.value = "";
@@ -200,20 +222,30 @@ export default function handleTasksAndProjects() {
       return;
     }
   }
-  function markCheckCircle(checkcircle, task, titleText, detailsBtn) {
-    checkcircle.setAttribute("name", "check-circle");
-    checkcircle.setAttribute("color", "#808080");
-    task.checked = true;
-    titleText.classList.add("checked");
-    detailsBtn.disabled = true;
-    detailsBtn.classList.add("disabled");
-  }
-
-  function handleDeleteTask(task, taskContainer) {
-    mainTasksContainer.removeChild(taskContainer);
-    const taskIndex = tasksArr.indexOf(task);
-    tasksArr.splice(taskIndex, 1);
-  }
 
   doneBtn.addEventListener("click", handleDoneBtn);
+}
+function markCheckCircle(checkcircle, task, titleText, detailsBtn) {
+  checkcircle.setAttribute("name", "check-circle");
+  checkcircle.setAttribute("color", "#808080");
+  task.checked = true;
+  titleText.classList.add("checked");
+  detailsBtn.disabled = true;
+  detailsBtn.classList.add("disabled");
+  saveDataInLocalStorage();   
+}
+
+function handleDeleteTask(task, taskContainer) {
+  mainTasksContainer.removeChild(taskContainer);
+  const taskIndex = tasksArr.indexOf(task);
+  tasksArr.splice(taskIndex, 1);
+  saveDataInLocalStorage();
+}
+
+export function saveDataInLocalStorage() {
+  localStorage.setItem("tasksArr", JSON.stringify(tasksArr));
+}
+
+function getDataInLocalStorage() {
+  return localStorage.getItem("tasksArr");
 }
