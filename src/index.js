@@ -1,7 +1,7 @@
 import handleTasksAndProjects from "./taskHandler";
-import saveDataInLocalStorage from "./taskHandler"
+import saveTasksDataInLocalStorage from "./taskHandler"
 if (!localStorage.getItem('tasksArr')) {
-  saveDataInLocalStorage();
+  saveTasksDataInLocalStorage();
   console.log("yes!")
 }
 else {
