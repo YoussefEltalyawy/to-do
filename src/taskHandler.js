@@ -1,9 +1,14 @@
-import Task from './task.js';
-import { createTaskCreationEl, createTaskUi, createAndPopulateDetailsModal, createProjectCreationEl } from './ui.js';
+import Task from "./task.js";
+import {
+  createTaskCreationEl,
+  createTaskUi,
+  createAndPopulateDetailsModal,
+  createProjectCreationEl,
+} from "./ui.js";
 
-const mainTasksContainer = document.querySelector('.main-tasks-container');
+const mainTasksContainer = document.querySelector(".main-tasks-container");
 let tasksArr;
-let projectsArr;
+let projectsArr = [];
 if (!getTasksDataInLocalStorage()) {
   tasksArr = [];
 } else {
@@ -13,76 +18,20 @@ if (!getTasksDataInLocalStorage()) {
       createTaskUi(task);
     if (task.checked === true) {
       markCheckCircle(checkcircle, task, titleText, detailsBtn);
-    } 
-    checkcircle.addEventListener('click', () => {
+    }
+    checkcircle.addEventListener("click", () => {
       markCheckCircle(checkcircle, task, titleText, detailsBtn);
     });
-    detailsBtn.addEventListener('click', () => {
+    detailsBtn.addEventListener("click", () => {
       createAndPopulateDetailsModal(task);
     });
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.addEventListener("click", () => {
       handleDeleteTask(task, taskContainer);
     });
   });
 }
 
-if (!getProjectsDataInLocalStorage()) {
-  projectsArr = [];
-} else {
-  projectsArr = JSON.parse(getProjectsDataInLocalStorage());
-  projectsArr.forEach(function (project) {
-    const projectName = project;
-    const projectH3 = document.createElement('h3');
-    const nav = document.querySelector('.nav');
-    const inbox = document.querySelector('.inbox');
-    projectH3.textContent = project;
-    nav.appendChild(projectH3);
-    projectH3.addEventListener('click', () => {
-      mainTasksContainer.innerHTML = '';
-      tasksArr.forEach((task) => {
-        if (task.project === projectName) {
-          const {
-            checkcircle,
-            titleText,
-            detailsBtn,
-            deleteBtn,
-            taskContainer
-          } = createTaskUi(task);
-          if (task.checked === true) {
-            markCheckCircle(checkcircle, task, titleText, detailsBtn);
-          }
-          detailsBtn.addEventListener('click', () => {
-            createAndPopulateDetailsModal(task);
-          });
-          deleteBtn.addEventListener('click', () => {
-            handleDeleteTask(task, taskContainer);
-          });
-        }
-      });
-    });
-    inbox.addEventListener('click', () => {
-      mainTasksContainer.innerHTML = '';
-      console.log("here")
-      tasksArr.forEach((task) => {
-        const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
-          createTaskUi(task);
-        if (task.checked === true) {
-          markCheckCircle(checkcircle, task, titleText, detailsBtn);
-        } else {
-          return;
-        }
-        detailsBtn.addEventListener('click', () => {
-          createAndPopulateDetailsModal(task);
-        });
-        deleteBtn.addEventListener('click', () => {
-          handleDeleteTask(task, taskContainer);
-        });
-      });
-    });
-  });
-}
-
-export default function handleTasksAndProjects () {
+export default function handleTasksAndProjects() {
   const {
     taskModal,
     titleH3,
@@ -100,34 +49,43 @@ export default function handleTasksAndProjects () {
     lowPriorityLabel,
     projectH3,
     projectInput,
-    doneBtn
+    doneBtn,
   } = createTaskCreationEl();
-  const addTaskBtn = document.querySelector('.add-task-btn');
 
-  function projectHandler () {
-    const nav = document.querySelector('.nav');
-    const inbox = document.querySelector('.inbox');
-    const addProjectBtn = document.querySelector('.new-project-btn');
+  if (!getProjectsDataInLocalStorage()) {
+    projectsArr = [];
+    projectHandler();
+  } else {
+    console.log("2");
+    projectsArr = JSON.parse(getProjectsDataInLocalStorage());
+    console.log(projectsArr)
+    pullProjects();
+  }
+
+  function projectHandler() {
+    const nav = document.querySelector(".nav");
+    const inbox = document.querySelector(".inbox");
+    const addProjectBtn = document.querySelector(".new-project-btn");
     const { projectInputContainer, projectNameInput, submitProjectBtn } =
       createProjectCreationEl();
-    function handleProjectCreation () {
+    function handleProjectCreation() {
       nav.appendChild(projectInputContainer);
     }
-    addProjectBtn.addEventListener('click', handleProjectCreation);
-    submitProjectBtn.addEventListener('click', () => {
+    addProjectBtn.addEventListener("click", handleProjectCreation);
+    submitProjectBtn.addEventListener("click", () => {
       const projectName = projectNameInput.value;
-      const projectH3 = document.createElement('h3');
+      const projectH3 = document.createElement("h3");
       projectH3.textContent = projectName;
       nav.removeChild(projectInputContainer);
       nav.appendChild(projectH3);
       projectsArr.push(projectName);
       saveProjectsDataInLocalStorage();
-      projectNameInput.value = '';
-      const newOption = document.createElement('option');
+      projectNameInput.value = "";
+      const newOption = document.createElement("option");
       newOption.textContent = projectName;
       projectInput.appendChild(newOption);
-      projectH3.addEventListener('click', () => {
-        mainTasksContainer.innerHTML = '';
+      projectH3.addEventListener("click", () => {
+        mainTasksContainer.innerHTML = "";
         tasksArr.forEach((task) => {
           if (task.project === projectName) {
             const {
@@ -135,48 +93,110 @@ export default function handleTasksAndProjects () {
               titleText,
               detailsBtn,
               deleteBtn,
-              taskContainer
+              taskContainer,
             } = createTaskUi(task);
             if (task.checked === true) {
               markCheckCircle(checkcircle, task, titleText, detailsBtn);
             }
-            detailsBtn.addEventListener('click', () => {
+            checkcircle.addEventListener("click", () => {
+              markCheckCircle(checkcircle, task, titleText, detailsBtn);
+            });
+            detailsBtn.addEventListener("click", () => {
               createAndPopulateDetailsModal(task);
             });
-            deleteBtn.addEventListener('click', () => {
+            deleteBtn.addEventListener("click", () => {
               handleDeleteTask(task, taskContainer);
             });
           }
         });
       });
-      inbox.addEventListener('click', () => {
-        mainTasksContainer.innerHTML = '';
+      inbox.addEventListener("click", () => {
+        mainTasksContainer.innerHTML = "";
         tasksArr.forEach((task) => {
           const {
             checkcircle,
             titleText,
             detailsBtn,
             deleteBtn,
-            taskContainer
+            taskContainer,
           } = createTaskUi(task);
           if (task.checked === true) {
             markCheckCircle(checkcircle, task, titleText, detailsBtn);
-          } else {
-            return;
           }
-          detailsBtn.addEventListener('click', () => {
+          checkcircle.addEventListener("click", () => {
+            markCheckCircle(checkcircle, task, titleText, detailsBtn);
+          });
+          detailsBtn.addEventListener("click", () => {
             createAndPopulateDetailsModal(task);
           });
-          deleteBtn.addEventListener('click', () => {
+          deleteBtn.addEventListener("click", () => {
             handleDeleteTask(task, taskContainer);
           });
         });
       });
     });
   }
-  projectHandler();
+  function pullProjects() {
+    projectsArr.forEach((project) => {
+      const nav = document.querySelector(".nav");
+      const projectName = project;
+      const projectH3 = document.createElement("h3");
+      projectH3.textContent = projectName;
+      nav.appendChild(projectH3);
+      const newOption = document.createElement("option");
+      newOption.textContent = projectName;
+      projectInput.appendChild(newOption);
+      projectH3.addEventListener("click", () => {
+        mainTasksContainer.innerHTML = "";
+        tasksArr.forEach((task) => {
+          if (task.project === projectName) {
+            const {
+              checkcircle,
+              titleText,
+              detailsBtn,
+              deleteBtn,
+              taskContainer,
+            } = createTaskUi(task);
+            if (task.checked === true) {
+              markCheckCircle(checkcircle, task, titleText, detailsBtn);
+            }
+            checkcircle.addEventListener("click", () => {
+              markCheckCircle(checkcircle, task, titleText, detailsBtn);
+            });
+            detailsBtn.addEventListener("click", () => {
+              createAndPopulateDetailsModal(task);
+            });
+            deleteBtn.addEventListener("click", () => {
+              handleDeleteTask(task, taskContainer);
+            });
+          }
+        });
+      });
+    });
+    const inbox = document.querySelector(".inbox");
+    inbox.addEventListener("click", () => {
+      mainTasksContainer.innerHTML = "";
+      tasksArr.forEach((task) => {
+        const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
+          createTaskUi(task);
+        if (task.checked === true) {
+          markCheckCircle(checkcircle, task, titleText, detailsBtn);
+        }
+        checkcircle.addEventListener("click", () => {
+          markCheckCircle(checkcircle, task, titleText, detailsBtn);
+        });
+        detailsBtn.addEventListener("click", () => {
+          createAndPopulateDetailsModal(task);
+        });
+        deleteBtn.addEventListener("click", () => {
+          handleDeleteTask(task, taskContainer);
+        });
+      });
+    });
+  }
+  const addTaskBtn = document.querySelector(".add-task-btn");
 
-  function handleAddTask () {
+  function handleAddTask() {
     taskModal.appendChild(titleH3);
     taskModal.appendChild(titleInput);
     taskModal.appendChild(descriptionH3);
@@ -196,18 +216,18 @@ export default function handleTasksAndProjects () {
     mainTasksContainer.appendChild(taskModal);
     taskModal.showModal();
   }
-  addTaskBtn.addEventListener('click', handleAddTask);
+  addTaskBtn.addEventListener("click", handleAddTask);
 
-  function createTaskFromInputs () {
+  function createTaskFromInputs() {
     const title = titleInput.value;
     const description = descriptionInput.value;
     const dueDate = dueDateInput.value;
     const project = projectInput.value;
     if (!title) {
-      alert('Please enter a title for the task.');
+      alert("Please enter a title for the task.");
     } else if (title) {
-      if (document.querySelector('input[name="priority"]:checked') == null) {
-        const priority = 'None';
+      if (document.querySelector('input[name="priority"]:checked') === null) {
+        const priority = "None";
         const task = new Task(
           title,
           description,
@@ -218,10 +238,10 @@ export default function handleTasksAndProjects () {
         );
         tasksArr.push(task);
         saveTasksDataInLocalStorage();
-        titleInput.value = '';
-        descriptionInput.value = '';
-        dueDateInput.value = '';
-        projectInput.value = '';
+        titleInput.value = "";
+        descriptionInput.value = "";
+        dueDateInput.value = "";
+        projectInput.value = "";
         return task;
       } else {
         const selectedPriority = document.querySelector(
@@ -238,67 +258,63 @@ export default function handleTasksAndProjects () {
         );
         tasksArr.push(task);
         saveTasksDataInLocalStorage();
-        titleInput.value = '';
-        descriptionInput.value = '';
-        dueDateInput.value = '';
+        titleInput.value = "";
+        descriptionInput.value = "";
+        dueDateInput.value = "";
         selectedPriority.checked = false;
-        projectInput.value = '';
+        projectInput.value = "";
         return task;
       }
     }
   }
-  function handleDoneBtn () {
+  function handleDoneBtn() {
     const task = createTaskFromInputs();
     taskModal.close();
     if (task) {
       const { checkcircle, titleText, detailsBtn, deleteBtn, taskContainer } =
         createTaskUi(task);
 
-      checkcircle.addEventListener('click', () => {
+      checkcircle.addEventListener("click", () => {
         markCheckCircle(checkcircle, task, titleText, detailsBtn);
       });
-      detailsBtn.addEventListener('click', () => {
+      detailsBtn.addEventListener("click", () => {
         createAndPopulateDetailsModal(task);
       });
-      deleteBtn.addEventListener('click', () => {
+      deleteBtn.addEventListener("click", () => {
         handleDeleteTask(task, taskContainer);
       });
-    } else {
-
     }
   }
 
-  doneBtn.addEventListener('click', handleDoneBtn);
+  doneBtn.addEventListener("click", handleDoneBtn);
 }
-function markCheckCircle (checkcircle, task, titleText, detailsBtn) {
-  checkcircle.setAttribute('name', 'check-circle');
-  checkcircle.setAttribute('color', '#808080');
+function markCheckCircle(checkcircle, task, titleText, detailsBtn) {
+  checkcircle.setAttribute("name", "check-circle");
+  checkcircle.setAttribute("color", "#808080");
   task.checked = true;
-  titleText.classList.add('checked');
+  titleText.classList.add("checked");
   detailsBtn.disabled = true;
-  detailsBtn.classList.add('disabled');
+  detailsBtn.classList.add("disabled");
   saveTasksDataInLocalStorage();
 }
 
-function handleDeleteTask (task, taskContainer) {
+function handleDeleteTask(task, taskContainer) {
   mainTasksContainer.removeChild(taskContainer);
   const taskIndex = tasksArr.indexOf(task);
   tasksArr.splice(taskIndex, 1);
   saveTasksDataInLocalStorage();
 }
 
-export function saveTasksDataInLocalStorage () {
-  localStorage.setItem('tasksArr', JSON.stringify(tasksArr));
+export function saveTasksDataInLocalStorage() {
+  localStorage.setItem("tasksArr", JSON.stringify(tasksArr));
 }
 
-function saveProjectsDataInLocalStorage () {
-  localStorage.setItem('projectsArr', JSON.stringify(projectsArr));
+function getTasksDataInLocalStorage() {
+  return localStorage.getItem("tasksArr");
 }
-
-function getTasksDataInLocalStorage () {
-  return localStorage.getItem('tasksArr');
+function saveProjectsDataInLocalStorage() {
+  localStorage.setItem("projectsArr", JSON.stringify(projectsArr));
 }
-
-function getProjectsDataInLocalStorage () {
-  return localStorage.getItem('projectsArr');
+function getProjectsDataInLocalStorage() {
+  return localStorage.getItem("projectsArr");
 }

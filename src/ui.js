@@ -59,6 +59,7 @@ export function createTaskCreationEl() {
   projectH3.textContent = "Project: ";
   const projectInput = document.createElement("select");
   projectInput.name = "projects";
+  projectInput.className = 'project-input'
 
   const doneBtn = document.createElement("button");
   doneBtn.textContent = "Done"; // Set button text here
